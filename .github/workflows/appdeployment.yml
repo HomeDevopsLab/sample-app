@@ -30,6 +30,7 @@ jobs:
         push: true
         tags: devkrolikowski/sample-app:${{ steps.read.outputs.tag }}
   deploy_on_kubernetes:
+    needs: publish_to_dockerhub
     runs-on: home-runner
     steps:
       - name: Chechout k8s manifests
