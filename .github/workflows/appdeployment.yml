@@ -25,7 +25,6 @@ jobs:
         tags: devkrolikowski/sample-app:latest
   deploy_on_kubernetes:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: publish_to_dockerhub
     runs-on: home-runner
     steps:
       - name: Chechout k8s manifests
