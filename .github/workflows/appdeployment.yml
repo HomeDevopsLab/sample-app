@@ -19,7 +19,6 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASS }}
     - name: Build and push
       uses: docker/build-push-action@v3
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       with:
         push: true
         tags: devkrolikowski/sample-app:latest
