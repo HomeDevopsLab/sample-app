@@ -13,6 +13,12 @@ jobs:
     - name: Read tags
       id: read
       run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+    - name: Check output
+      env:
+        RELEASE_VERSION: ${{ steps.read.outputs.tag }}
+      run: |
+        echo $RELEASE_VERSION
+        echo ${{ steps.read.outputs.tag }}
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
