@@ -32,7 +32,6 @@ jobs:
         tags: devkrolikowski/sample-app:${{ steps.read.outputs.tag }}
   deploy_on_kubernetes:
     runs-on: home-runner
-    if: $RELEASE_VERSION != 'main'
     steps:
       - name: Chechout k8s manifests
         uses: actions/checkout@v3
