@@ -13,7 +13,7 @@ jobs:
       id: read
       run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
     - name: Check output
-      env:\questions\60916931\github-action-does-the-if-have-an-else
+      env:
         RELEASE_VERSION: ${{ steps.read.outputs.tag }}
       run: |
         echo tag: ${{ steps.read.outputs.tag }}
