@@ -7,14 +7,13 @@ on:
 
 jobs:
   publish_to_dockerhub:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
     - name: Chechout code
       uses: actions/checkout@v3
-      if: github.event_name == 'pull_request'
     - name: Login to DockerHub
       uses: docker/login-action@v2
-      if: github.event_name == 'pull_request'
       with:
         username: ${{ secrets.DOCKERHUB_LOGIN }}
         password: ${{ secrets.DOCKERHUB_PASS }}
@@ -25,16 +24,15 @@ jobs:
         push: true
         tags: devkrolikowski/sample-app:latest
   deploy_on_kubernetes:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: publish_to_dockerhub
     runs-on: home-runner
     steps:
       - name: Chechout k8s manifests
         uses: actions/checkout@v3
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         with:
           repository: HomeDevopsLab/sample-app-k8s
           ref: refs/heads/main
       - name: Deploy on k3-lab kubernetes cluster
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |-
           kubectl apply -f .
