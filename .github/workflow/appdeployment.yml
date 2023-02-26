@@ -1,0 +1,32 @@
+name: Sample application deployment
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  publish_to_dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Chechout code
+      uses: actions/checkout@v3
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_LOGIN }}
+        password: ${{ secrets.DOCKERHUB_PASS }}
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: devkrolikowski/sampleapp:latest
+  deploy_on_kubernetes:
+    needs: publish_to_dockerhub
+    runs-on: home-runner
+    steps:
+      - name: Chechout code
+        uses: actions/checkout@v3
+      - name: Deploy on k3-lab kubernetes cluster
+        run: |-
+          kubectl apply -f .
