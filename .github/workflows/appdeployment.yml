@@ -29,15 +29,3 @@ jobs:
       with:
         push: true
         tags: devkrolikowski/sample-app:${{ steps.read.outputs.tag }}
-  deploy_on_kubernetes:
-    needs: publish_to_dockerhub
-    runs-on: home-runner
-    steps:
-      - name: Chechout k8s manifests
-        uses: actions/checkout@v3
-        with:
-          repository: HomeDevopsLab/sample-app-k8s
-          ref: refs/heads/main
-      - name: Deploy on k3-lab kubernetes cluster
-        run: |-
-          kubectl apply -f .
