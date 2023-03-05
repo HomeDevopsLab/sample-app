@@ -1,0 +1,14 @@
+.main {
+    width: fit-content;
+    border: 1px solid green;
+    overflow: hidden; /* add this to contain floated children */
+    margin-top: 20px;
+}
+.img {
+    width: 800px;
+    float:left; /* add this */
+}
+.txt {
+    width: 200px;
+    float: left; /* add this */
+}
